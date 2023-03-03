@@ -23,6 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       await _repo.getCountry(query).then((value) {
         setState(() => _countryList = value.country ?? <Country>[]);
+        print("valueeResoonse = $value.country.tostring");
+
+        for (var i in value.country!) {
+          print(i.countryId.toString());
+        }
       });
     });
   }
@@ -74,8 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                       ),
                       itemBuilder: (_, index) => Container(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(_countryList[index].countryId ?? ''),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Text(_countryList[index].countryId ?? ''),
+                            const Padding(padding: EdgeInsets.only(left: 20.0)),
+                            Text(_countryList[index].probability.toString())
+                          ],
+                        ),
                       ),
                     ),
             ),
